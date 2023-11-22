@@ -4,6 +4,7 @@ import org.example.data.Produto;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ProdutoRepository {
@@ -12,13 +13,13 @@ public interface ProdutoRepository {
 
     public Produto update(Produto produto) throws SQLException;
 
-    public Produto findById(Long id);
+    public Optional<Produto> findById(Long id);
 
-    public Produto findByHash(UUID hash);
+    public Optional<Produto> findByHash(UUID hash);
 
-    public Produto findByEan13(String ean13);
+    public Optional<Produto> findByEan13(String ean13);
 
-    public Produto findByNome(String nome);
+    public Optional<Produto> findByNome(String nome);
 
     public ArrayList<Produto> list();
 

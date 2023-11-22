@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ProdutoRepositoryPostgresql implements ProdutoRepository {
@@ -60,14 +61,14 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     }
 
     @Override
-    public Produto findById(Long id) {
+    public Optional<Produto> findById(Long id) {
         try {
             PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE id = ?");
             statement.setLong(1, id);
             statement.execute();
             ResultSet resultado = statement.executeQuery();
-            Produto produto = new Produto();
             if (resultado.next()) {
+                Produto produto = new Produto();
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
@@ -79,23 +80,24 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
                 produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
                 produto.setLativo(resultado.getBoolean("lativo"));
-                return produto;
+                return Optional.of(produto);
             }
-            return produto;
+
+            return Optional.empty();
         }catch (Exception error) {
             throw new RuntimeException("Erro ao buscar produto");
         }
     }
 
     @Override
-    public Produto findByHash(UUID hash) {
+    public Optional<Produto> findByHash(UUID hash) {
         try {
             PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE hash = ?");
             statement.setObject(1, hash);
             statement.execute();
-            Produto produto = new Produto();
             ResultSet resultado = statement.executeQuery();
             if (resultado.next()) {
+                Produto produto = new Produto();
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
@@ -107,23 +109,23 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
                 produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
                 produto.setLativo(resultado.getBoolean("lativo"));
-                return produto;
+                return Optional.of(produto);
             }
-            return produto;
+            return Optional.empty();
         }catch (Exception error) {
             throw new RuntimeException("Erro ao buscar produto");
         }
     }
 
     @Override
-    public Produto findByEan13(String ean13) {
+    public Optional<Produto> findByEan13(String ean13) {
         try {
             PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE ean13 = ?");
             statement.setString(1, ean13);
             statement.execute();
-            Produto produto = new Produto();
             ResultSet resultado = statement.executeQuery();
             if (resultado.next()) {
+                Produto produto = new Produto();
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
@@ -135,23 +137,23 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
                 produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
                 produto.setLativo(resultado.getBoolean("lativo"));
-                return produto;
+                return Optional.of(produto);
             }
-            return produto;
+            return Optional.empty();
         }catch (Exception error) {
             throw new RuntimeException("Erro ao buscar produto");
         }
     }
 
     @Override
-    public Produto findByNome(String nome) {
+    public Optional<Produto> findByNome(String nome) {
         try {
             PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE nome = ?");
             statement.setString(1, nome);
             statement.execute();
-            Produto produto = new Produto();
             ResultSet resultado = statement.executeQuery();
             if (resultado.next()) {
+                Produto produto = new Produto();
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
@@ -163,9 +165,9 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
                 produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
                 produto.setLativo(resultado.getBoolean("lativo"));
-                return produto;
+                return Optional.of(produto);
             }
-            return produto;
+            return Optional.empty();
         }catch (Exception error) {
             throw new RuntimeException("Erro ao buscar produto");
         }
