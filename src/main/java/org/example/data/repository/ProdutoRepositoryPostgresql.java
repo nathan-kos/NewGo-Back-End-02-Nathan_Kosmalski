@@ -229,4 +229,19 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
             throw new RuntimeException("Erro ao listar produtos");
         }
     }
+
+    @Override
+    public void setLativoProduto(Produto produto) throws SQLException {
+        try {
+            conexao.setAutoCommit(false);
+            PreparedStatement statement = conexao.prepareStatement("UPDATE produto SET lativo = ? WHERE hash = ?");
+            statement.setBoolean(1, produto.getLativo());
+            statement.setObject(2, produto.getHash());
+            statement.execute();
+            conexao.commit();
+        }catch (Exception error) {
+            conexao.rollback();
+            throw new RuntimeException("Erro ao desativar produto");
+        }
+    }
 }
