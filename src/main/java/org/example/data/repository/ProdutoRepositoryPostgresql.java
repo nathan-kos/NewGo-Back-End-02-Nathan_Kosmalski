@@ -22,7 +22,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     public Produto save(Produto produto) throws SQLException {
         try {
             conexao.setAutoCommit(false);
-            PreparedStatement statement = conexao.prepareStatement("INSERT INTO produto (hash, nome, descricao, ean13, preco, quantidade, estoque_min, lativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement statement = conexao.prepareStatement("INSERT INTO produtos (hash, nome, descricao, ean13, preco, quantidade, estoque_min, lativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             statement.setObject(1, produto.getHash());
             statement.setString(2, produto.getNome());
             statement.setString(3, produto.getDescricao());
@@ -35,6 +35,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
             conexao.commit();
             return produto;
         }catch (Exception error) {
+            System.out.println(error.getMessage());
             conexao.rollback();
             throw new RuntimeException("Erro ao salvar produto");
         }
@@ -44,7 +45,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     public Produto update(Produto produto) throws SQLException {
         try {
             conexao.setAutoCommit(false);
-            PreparedStatement statement = conexao.prepareStatement("UPDATE produto SET descricao = ?, preco = ?, quantidade = ?, estoque_min = ?, lativo = ? WHERE hash = ?");
+            PreparedStatement statement = conexao.prepareStatement("UPDATE produtos SET descricao = ?, preco = ?, quantidade = ?, estoque_min = ?, lativo = ? WHERE hash = ?");
             statement.setString(1, produto.getDescricao());
             statement.setDouble(2, produto.getPreco());
             statement.setInt(3, produto.getQuantidade());
@@ -63,7 +64,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     @Override
     public Optional<Produto> findById(Long id) {
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE id = ?");
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos WHERE id = ?");
             statement.setLong(1, id);
             statement.execute();
             ResultSet resultado = statement.executeQuery();
@@ -92,7 +93,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     @Override
     public Optional<Produto> findByHash(UUID hash) {
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE hash = ?");
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos WHERE hash = ?");
             statement.setObject(1, hash);
             statement.execute();
             ResultSet resultado = statement.executeQuery();
@@ -120,7 +121,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     @Override
     public Optional<Produto> findByEan13(String ean13) {
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE ean13 = ?");
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos WHERE ean13 = ?");
             statement.setString(1, ean13);
             statement.execute();
             ResultSet resultado = statement.executeQuery();
@@ -148,7 +149,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     @Override
     public Optional<Produto> findByNome(String nome) {
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE nome = ?");
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos WHERE nome = ?");
             statement.setString(1, nome);
             statement.execute();
             ResultSet resultado = statement.executeQuery();
@@ -176,7 +177,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     @Override
     public ArrayList<Produto> list() {
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto");
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos");
             statement.execute();
             ArrayList<Produto> produtos = new ArrayList<>();
             ResultSet resultado = statement.executeQuery();
@@ -204,7 +205,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     @Override
     public ArrayList<Produto> listByLativo(Boolean lativo) {
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produto WHERE lativo = ?");
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos WHERE lativo = ?");
             statement.setBoolean(1, lativo);
             statement.execute();
             ArrayList<Produto> produtos = new ArrayList<>();
@@ -234,7 +235,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     public void setLativoProduto(Produto produto) throws SQLException {
         try {
             conexao.setAutoCommit(false);
-            PreparedStatement statement = conexao.prepareStatement("UPDATE produto SET lativo = ? WHERE hash = ?");
+            PreparedStatement statement = conexao.prepareStatement("UPDATE produtos SET lativo = ? WHERE hash = ?");
             statement.setBoolean(1, produto.getLativo());
             statement.setObject(2, produto.getHash());
             statement.execute();
