@@ -25,4 +25,5 @@ public interface ProdutoRepository {
 
     public ArrayList<Produto> listByLativo(Boolean lativo);
 
+    public void setLativoProduto(Produto produto) throws SQLException;
 }
