@@ -22,7 +22,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     public Produto save(Produto produto) throws SQLException {
         try {
             conexao.setAutoCommit(false);
-            PreparedStatement statement = conexao.prepareStatement("INSERT INTO produtos (hash, nome, descricao, ean13, preco, quantidade, estoque_min, lativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement statement = conexao.prepareStatement("INSERT INTO produtos (hash, nome, descricao, ean13, preco, quantidade, estoque_min, lativo, dtcreate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             statement.setObject(1, produto.getHash());
             statement.setString(2, produto.getNome());
             statement.setString(3, produto.getDescricao());
@@ -31,6 +31,7 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
             statement.setInt(6, produto.getQuantidade());
             statement.setInt(7, produto.getEstoque_min());
             statement.setBoolean(8, produto.getLativo());
+            statement.setObject(9, produto.getDtcreate());
             statement.execute();
             conexao.commit();
             return produto;
