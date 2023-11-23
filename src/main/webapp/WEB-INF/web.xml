@@ -9,6 +9,14 @@
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Produtos</servlet-name>
+        <servlet-class>org.example.presentation.servlet.ProdutoController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Produtos</servlet-name>
+        <url-pattern>/produtos</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
