@@ -32,4 +32,17 @@ public class Produto {
 
     private Boolean lativo;
 
+    public Produto(UUID hash, String nome, String descricao, String ean13, Double preco, Integer quantidade, Integer estoque_min, LocalDateTime dtcreate, LocalDateTime dtupdate, Boolean lativo) {
+        this.hash = hash;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.ean13 = ean13;
+        this.preco = preco;
+        this.quantidade = quantidade;
+        this.estoque_min = estoque_min;
+        this.dtcreate = dtcreate;
+        this.dtupdate = dtupdate;
+        this.lativo = lativo;
+    }
+
 }
