@@ -52,6 +52,7 @@ public class ProdutoController extends HttpServlet {
 
        // produto/ -> POST -> cadastrar produto
 
+        response.setContentType("application/json");
             String body = getBodyReqJson(request);
 
             try{
