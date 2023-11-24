@@ -74,13 +74,17 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
-                produto.setDescricao(resultado.getString("descricao"));
+                if(resultado.getString("descricao") != null){
+                    produto.setDescricao(resultado.getString("descricao"));
+                }
                 produto.setEan13(resultado.getString("ean13"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
                 produto.setEstoque_min(resultado.getInt("estoque_min"));
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
-                produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                if (resultado.getTimestamp("dtupdate") != null) {
+                    produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                }
                 produto.setLativo(resultado.getBoolean("lativo"));
                 return Optional.of(produto);
             }
@@ -103,13 +107,17 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
-                produto.setDescricao(resultado.getString("descricao"));
+                if(resultado.getString("descricao") != null){
+                    produto.setDescricao(resultado.getString("descricao"));
+                }
                 produto.setEan13(resultado.getString("ean13"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
                 produto.setEstoque_min(resultado.getInt("estoque_min"));
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
-                produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                if (resultado.getTimestamp("dtupdate") != null) {
+                    produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                }
                 produto.setLativo(resultado.getBoolean("lativo"));
                 return Optional.of(produto);
             }
@@ -131,13 +139,17 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
-                produto.setDescricao(resultado.getString("descricao"));
+                if(resultado.getString("descricao") != null){
+                    produto.setDescricao(resultado.getString("descricao"));
+                }
                 produto.setEan13(resultado.getString("ean13"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
                 produto.setEstoque_min(resultado.getInt("estoque_min"));
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
-                produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                if (resultado.getTimestamp("dtupdate") != null) {
+                    produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                }
                 produto.setLativo(resultado.getBoolean("lativo"));
                 return Optional.of(produto);
             }
@@ -159,13 +171,17 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
-                produto.setDescricao(resultado.getString("descricao"));
+                if(resultado.getString("descricao") != null){
+                    produto.setDescricao(resultado.getString("descricao"));
+                }
                 produto.setEan13(resultado.getString("ean13"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
                 produto.setEstoque_min(resultado.getInt("estoque_min"));
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
-                produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                if (resultado.getTimestamp("dtupdate") != null) {
+                    produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                }
                 produto.setLativo(resultado.getBoolean("lativo"));
                 return Optional.of(produto);
             }
@@ -187,13 +203,17 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
-                produto.setDescricao(resultado.getString("descricao"));
+                if(resultado.getString("descricao") != null){
+                    produto.setDescricao(resultado.getString("descricao"));
+                }
                 produto.setEan13(resultado.getString("ean13"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
                 produto.setEstoque_min(resultado.getInt("estoque_min"));
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
-                produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                if (resultado.getTimestamp("dtupdate") != null) {
+                    produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                }
                 produto.setLativo(resultado.getBoolean("lativo"));
                 produtos.add(produto);
             }
@@ -216,13 +236,17 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
                 produto.setId(resultado.getLong("id"));
                 produto.setHash((UUID) resultado.getObject("hash"));
                 produto.setNome(resultado.getString("nome"));
-                produto.setDescricao(resultado.getString("descricao"));
+                if(resultado.getString("descricao") != null){
+                    produto.setDescricao(resultado.getString("descricao"));
+                }
                 produto.setEan13(resultado.getString("ean13"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
                 produto.setEstoque_min(resultado.getInt("estoque_min"));
                 produto.setDtcreate(resultado.getTimestamp("dtcreate").toLocalDateTime());
-                produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                if (resultado.getTimestamp("dtupdate") != null) {
+                    produto.setDtupdate(resultado.getTimestamp("dtupdate").toLocalDateTime());
+                }
                 produto.setLativo(resultado.getBoolean("lativo"));
                 produtos.add(produto);
             }
