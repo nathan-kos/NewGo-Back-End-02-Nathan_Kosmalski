@@ -91,21 +91,17 @@ public class ProdutoController extends HttpServlet {
             return;
         }
 
-
-
         response.setContentType("application/json");
-        Gson gson = new Gson();
         try {
             DeleteProdutoService.execute(hash);
             ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, "Produto excluído com sucesso!", 200);
             response.setStatus(200);
-            response.getWriter().println(gson.toJson(responseDTO));
+            response.getWriter().println(JsonConverter.toJson(responseDTO));
         } catch (ProductExcption e) {
             response.setStatus(e.getCode());
             ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
             response.getWriter().println(gson.toJson(responseDTO));
         }
-
     }
 
     private static String getBodyReqJson(HttpServletRequest req) throws IOException {
