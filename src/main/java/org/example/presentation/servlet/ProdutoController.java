@@ -1,8 +1,13 @@
 package org.example.presentation.servlet;
 
 import com.google.gson.Gson;
+import org.example.data.Produto;
+import org.example.domain.service.CreateProdutoService;
 import org.example.domain.service.DeleteProdutoService;
+import org.example.presentation.DTO.CreateProdutoDTO;
 import org.example.presentation.DTO.ResponseDTO;
+import org.example.presentation.mappers.CreateProdutoMapper;
+import org.example.util.JsonConverter;
 import org.example.util.LocalizadorDeServico;
 import org.example.util.exception.ProductExcption;
 
@@ -11,7 +16,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @WebServlet("/produtos/*")
 public class ProdutoController extends HttpServlet {
@@ -45,9 +52,20 @@ public class ProdutoController extends HttpServlet {
 
        // produto/ -> POST -> cadastrar produto
 
+            String body = getBodyReqJson(request);
 
+            try{
+                Produto produto = CreateProdutoMapper.toProduto(JsonConverter.fromJson(body, CreateProdutoDTO.class));
+                produto = CreateProdutoService.execute(produto);
+                ResponseDTO<Produto> responseDTO = new ResponseDTO<Produto>(produto, "Produto cadastrado com sucesso!", 200);
+                response.setStatus(200);
+                response.getWriter().println(JsonConverter.toJson(responseDTO));
+            }catch (ProductExcption e){
+                response.setStatus(e.getCode());
+                ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+                response.getWriter().println(JsonConverter.toJson(responseDTO));
+            }
     }
-
 
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,5 +105,15 @@ public class ProdutoController extends HttpServlet {
             response.getWriter().println(gson.toJson(responseDTO));
         }
 
+    }
+
+    private static String getBodyReqJson(HttpServletRequest req) throws IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder requestBody = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestBody.append(line);
+        }
+        return new String(requestBody.toString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
     }
 }
