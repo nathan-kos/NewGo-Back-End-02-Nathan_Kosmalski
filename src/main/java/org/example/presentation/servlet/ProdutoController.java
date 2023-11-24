@@ -100,7 +100,7 @@ public class ProdutoController extends HttpServlet {
         } catch (ProductExcption e) {
             response.setStatus(e.getCode());
             ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
-            response.getWriter().println(gson.toJson(responseDTO));
+            response.getWriter().println(JsonConverter.toJson(responseDTO));
         }
     }
 
