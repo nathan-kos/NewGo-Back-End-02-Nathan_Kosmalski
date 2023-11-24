@@ -37,13 +37,13 @@ public abstract class CreateProdutoService {
             throw new ExistingProductException("Produto já cadastrado", 400);
         }
 
-        produtoExitente = repository.findByNome(produto.getNome());
+        produto.setNome(produto.getNome().toUpperCase());
 
+        produtoExitente = repository.findByNome(produto.getNome());
+        
         if(produtoExitente.isPresent()){
             throw new ExistingProductException("Produto já cadastrado", 400);
         }
-
-        produto.setNome(produto.getNome().toUpperCase());
 
        try {
            return repository.save(produto);
