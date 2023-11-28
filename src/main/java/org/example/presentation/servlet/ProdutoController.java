@@ -94,7 +94,7 @@ public class ProdutoController extends HttpServlet {
         response.setContentType("application/json");
         try {
             DeleteProdutoService.execute(hash);
-            ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, "Produto excluído com sucesso!", 200);
+            ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, "Produto dasativado com sucesso!", 200);
             response.setStatus(200);
             response.getWriter().println(JsonConverter.toJson(responseDTO));
         } catch (ProductExcption e) {
