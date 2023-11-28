@@ -1,14 +1,15 @@
 package org.example.presentation.servlet;
 
-import com.google.gson.Gson;
 import org.example.data.Produto;
 import org.example.domain.service.CreateProdutoService;
 import org.example.domain.service.DeleteProdutoService;
+import org.example.domain.service.UpdateProdutoService;
 import org.example.presentation.DTO.CreateProdutoDTO;
 import org.example.presentation.DTO.ResponseDTO;
+import org.example.presentation.DTO.UpdateProdutoDTO;
 import org.example.presentation.mappers.CreateProdutoMapper;
+import org.example.presentation.mappers.UpdateProdutoMapper;
 import org.example.util.JsonConverter;
-import org.example.util.LocalizadorDeServico;
 import org.example.util.exception.ProductExcption;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 @WebServlet("/produtos/*")
 public class ProdutoController extends HttpServlet {
@@ -73,7 +75,28 @@ public class ProdutoController extends HttpServlet {
 
         // produto/hash -> PUT -> atualizar produto
 
+        String hash = request.getParameter("hash");
 
+        if(hash == null) {
+            response.setStatus(400);
+            response.getWriter().println("Hash não informado!");
+            return;
+        }
+
+        response.setContentType("application/json");
+        String body = getBodyReqJson(request);
+
+        try {
+            Produto produto = UpdateProdutoMapper.toProduto(JsonConverter.fromJson(body, UpdateProdutoDTO.class), UUID.fromString(hash));
+            produto = UpdateProdutoService.execute(produto);
+            ResponseDTO<Produto> responseDTO = new ResponseDTO<Produto>(produto, "Produto atualizado com sucesso!", 200);
+            response.setStatus(200);
+            response.getWriter().println(JsonConverter.toJson(responseDTO));
+        } catch (ProductExcption e) {
+            response.setStatus(e.getCode());
+            ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+            response.getWriter().println(JsonConverter.toJson(responseDTO));
+        }
 
     }
 
