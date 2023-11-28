@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,13 +47,14 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     public Produto update(Produto produto) throws SQLException {
         try {
             conexao.setAutoCommit(false);
-            PreparedStatement statement = conexao.prepareStatement("UPDATE produtos SET descricao = ?, preco = ?, quantidade = ?, estoque_min = ?, lativo = ? WHERE hash = ?");
+            PreparedStatement statement = conexao.prepareStatement("UPDATE produtos SET descricao = ?, preco = ?, quantidade = ?, estoque_min = ?, lativo = ?, dtupdate = ? WHERE hash = ?");
             statement.setString(1, produto.getDescricao());
             statement.setDouble(2, produto.getPreco());
             statement.setInt(3, produto.getQuantidade());
             statement.setInt(4, produto.getEstoque_min());
             statement.setBoolean(5, produto.getLativo());
-            statement.setObject(6, produto.getHash());
+            statement.setObject(6, LocalDateTime.now());
+            statement.setObject(7, produto.getHash());
             statement.execute();
             conexao.commit();
             return produto;
