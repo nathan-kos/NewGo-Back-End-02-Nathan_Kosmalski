@@ -10,7 +10,7 @@ import org.example.util.exception.NotFoundException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class UpdateProdutoService {
+public abstract class UpdateProdutoService {
 
     public static Produto execute(Produto produto) throws NotFoundException, InternalServerErrorException {
 
