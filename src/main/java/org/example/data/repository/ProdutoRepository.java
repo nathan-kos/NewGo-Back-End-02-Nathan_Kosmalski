@@ -21,7 +21,7 @@ public interface ProdutoRepository {
 
     public Optional<Produto> findByNome(String nome);
 
-    public ArrayList<Produto> list();
+    public ArrayList<Produto> list(int page, int limit);
 
     public ArrayList<Produto> listByLativo(Boolean lativo);
 
