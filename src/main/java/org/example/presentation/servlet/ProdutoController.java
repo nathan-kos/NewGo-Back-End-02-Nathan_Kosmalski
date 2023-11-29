@@ -8,7 +8,7 @@ import org.example.presentation.DTO.UpdateProdutoDTO;
 import org.example.presentation.mappers.CreateProdutoMapper;
 import org.example.presentation.mappers.UpdateProdutoMapper;
 import org.example.util.JsonConverter;
-import org.example.util.exception.ProductExcption;
+import org.example.util.exception.ProductException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,7 +43,7 @@ public class ProdutoController extends HttpServlet {
                 ResponseDTO<Produto> responseDTO = new ResponseDTO<Produto>(produto, "Produto encontrado com sucesso!", 200);
                 response.setStatus(200);
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
-            } catch (ProductExcption e) {
+            } catch (ProductException e) {
                 response.setStatus(e.getCode());
                 ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
@@ -55,7 +55,7 @@ public class ProdutoController extends HttpServlet {
                 ResponseDTO<ArrayList<Produto>> responseDTO = new ResponseDTO<>(ListProdutoService.execute(page, limit), "Produtos encontrados com sucesso!", 200);
                 response.setStatus(200);
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
-            } catch (ProductExcption e) {
+            } catch (ProductException e) {
                 response.setStatus(e.getCode());
                 ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
@@ -78,7 +78,7 @@ public class ProdutoController extends HttpServlet {
                 ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto cadastrado com sucesso!", 200);
                 response.setStatus(200);
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
-            }catch (ProductExcption e){
+            }catch (ProductException e){
                 response.setStatus(e.getCode());
                 ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
@@ -107,7 +107,7 @@ public class ProdutoController extends HttpServlet {
             ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto atualizado com sucesso!", 200);
             response.setStatus(200);
             response.getWriter().println(JsonConverter.toJson(responseDTO));
-        } catch (ProductExcption e) {
+        } catch (ProductException e) {
             response.setStatus(e.getCode());
             ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
             response.getWriter().println(JsonConverter.toJson(responseDTO));
@@ -135,7 +135,7 @@ public class ProdutoController extends HttpServlet {
             ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, "Produto dasativado com sucesso!", 200);
             response.setStatus(200);
             response.getWriter().println(JsonConverter.toJson(responseDTO));
-        } catch (ProductExcption e) {
+        } catch (ProductException e) {
             response.setStatus(e.getCode());
             ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
             response.getWriter().println(JsonConverter.toJson(responseDTO));

@@ -1,10 +1,10 @@
 package org.example.util.exception;
 
-public abstract class ProductExcption extends Exception{
+public abstract class ProductException extends Exception{
 
     private int code;
 
-    public ProductExcption(String message, int code) {
+    public ProductException(String message, int code) {
         super(message);
         this.code = code;
     }
