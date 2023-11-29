@@ -45,7 +45,7 @@ public class ProdutoController extends HttpServlet {
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
             } catch (ProductExcption e) {
                 response.setStatus(e.getCode());
-                ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+                ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
             }
         }else {
@@ -57,7 +57,7 @@ public class ProdutoController extends HttpServlet {
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
             } catch (ProductExcption e) {
                 response.setStatus(e.getCode());
-                ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+                ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
             }
         }
@@ -75,18 +75,18 @@ public class ProdutoController extends HttpServlet {
             try{
                 Produto produto = CreateProdutoMapper.toProduto(JsonConverter.fromJson(body, CreateProdutoDTO.class));
                 produto = CreateProdutoService.execute(produto);
-                ResponseDTO<Produto> responseDTO = new ResponseDTO<Produto>(produto, "Produto cadastrado com sucesso!", 200);
+                ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto cadastrado com sucesso!", 200);
                 response.setStatus(200);
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
             }catch (ProductExcption e){
                 response.setStatus(e.getCode());
-                ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+                ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
             }
     }
 
     @Override
-    public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // produto/hash -> PUT -> atualizar produto
 
@@ -104,12 +104,12 @@ public class ProdutoController extends HttpServlet {
         try {
             Produto produto = UpdateProdutoMapper.toProduto(JsonConverter.fromJson(body, UpdateProdutoDTO.class), UUID.fromString(hash));
             produto = UpdateProdutoService.execute(produto);
-            ResponseDTO<Produto> responseDTO = new ResponseDTO<Produto>(produto, "Produto atualizado com sucesso!", 200);
+            ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto atualizado com sucesso!", 200);
             response.setStatus(200);
             response.getWriter().println(JsonConverter.toJson(responseDTO));
         } catch (ProductExcption e) {
             response.setStatus(e.getCode());
-            ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+            ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
             response.getWriter().println(JsonConverter.toJson(responseDTO));
         }
 
@@ -132,12 +132,12 @@ public class ProdutoController extends HttpServlet {
         response.setContentType("application/json");
         try {
             DeleteProdutoService.execute(hash);
-            ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, "Produto dasativado com sucesso!", 200);
+            ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, "Produto dasativado com sucesso!", 200);
             response.setStatus(200);
             response.getWriter().println(JsonConverter.toJson(responseDTO));
         } catch (ProductExcption e) {
             response.setStatus(e.getCode());
-            ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+            ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
             response.getWriter().println(JsonConverter.toJson(responseDTO));
         }
     }
