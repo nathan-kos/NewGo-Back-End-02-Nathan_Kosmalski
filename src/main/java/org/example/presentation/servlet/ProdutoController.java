@@ -8,6 +8,7 @@ import org.example.presentation.DTO.UpdateProdutoDTO;
 import org.example.presentation.mappers.CreateProdutoMapper;
 import org.example.presentation.mappers.UpdateProdutoMapper;
 import org.example.util.JsonConverter;
+import org.example.util.UuidConverter;
 import org.example.util.exception.ProductException;
 
 import javax.servlet.ServletException;
@@ -89,20 +90,20 @@ public class ProdutoController extends HttpServlet {
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // produto/hash -> PUT -> atualizar produto
-
-        String hash = request.getParameter("hash");
-
-        if(hash == null) {
-            response.setStatus(400);
-            response.getWriter().println("Hash não informado!");
-            return;
-        }
-
         response.setContentType("application/json");
+
+        String hash = request.getPathInfo().split("/").length > 1 ? request.getPathInfo().split("/")[1] : null;
+
+        if(hash == null || hash.isEmpty() || !UuidConverter.isValid(hash)) {
+            response.setStatus(400);
+            ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, "hash invalido!", 400);
+            response.getWriter().println(JsonConverter.toJson(responseDTO));
+        }
+        
         String body = getBodyReqJson(request);
 
         try {
-            Produto produto = UpdateProdutoMapper.toProduto(JsonConverter.fromJson(body, UpdateProdutoDTO.class), UUID.fromString(hash));
+            Produto produto = UpdateProdutoMapper.toProduto(JsonConverter.fromJson(body, UpdateProdutoDTO.class), UuidConverter.toUuid(hash));
             produto = UpdateProdutoService.execute(produto);
             ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto atualizado com sucesso!", 200);
             response.setStatus(200);
