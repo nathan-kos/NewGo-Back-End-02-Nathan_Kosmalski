@@ -3,6 +3,7 @@ package org.example.presentation.servlet;
 import org.example.data.Produto;
 import org.example.domain.service.CreateProdutoService;
 import org.example.domain.service.DeleteProdutoService;
+import org.example.domain.service.GetProdutoService;
 import org.example.domain.service.UpdateProdutoService;
 import org.example.presentation.DTO.CreateProdutoDTO;
 import org.example.presentation.DTO.ResponseDTO;
@@ -34,18 +35,22 @@ public class ProdutoController extends HttpServlet {
         // produto/ean13 -> GET -> buscar produto por ean13
         // produto/nome -> GET -> buscar produto por nome
         // produto/ativo -> GET -> buscar produtos ativos
+        
+        String parametro = request.getPathInfo().split("/")[1];
 
-        System.out.println(request.getPathInfo());
-        System.out.println(request.getRequestURI());
-        System.out.println(request.getServletPath());
-        System.out.println(request.getQueryString());
-        System.out.println(request.getParameterNames().nextElement()+ "   aqui");
-
-
-
-        response.setContentType("text/plain");
-        response.getWriter().println("Servlet de produtos rodando!");
-
+        response.setContentType("application/json");
+        if(parametro != null) {
+            try {
+                Produto produto = GetProdutoService.execute(parametro);
+                ResponseDTO<Produto> responseDTO = new ResponseDTO<Produto>(produto, "Produto encontrado com sucesso!", 200);
+                response.setStatus(200);
+                response.getWriter().println(JsonConverter.toJson(responseDTO));
+            } catch (ProductExcption e) {
+                response.setStatus(e.getCode());
+                ResponseDTO<Void> responseDTO = new ResponseDTO<Void>(null, e.getMessage(), e.getCode());
+                response.getWriter().println(JsonConverter.toJson(responseDTO));
+            }
+        }
     }
 
 
