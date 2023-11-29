@@ -10,7 +10,7 @@ import org.example.util.exception.NotFoundException;
 import java.util.Optional;
 import java.util.UUID;
 
-public class DeleteProdutoService {
+public abstract class DeleteProdutoService {
 
     public static void execute(String hash) throws NotFoundException, DeactivatedProductException, InternalServerErrorException {
 
