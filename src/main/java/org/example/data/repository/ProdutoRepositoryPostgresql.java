@@ -194,9 +194,11 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     }
 
     @Override
-    public ArrayList<Produto> list() {
+    public ArrayList<Produto> list(int page, int limit) {
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos");
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM produtos LIMIT ? OFFSET ?");
+            statement.setInt(1, limit);
+            statement.setInt(2, (page - 1) * limit);
             statement.execute();
             ArrayList<Produto> produtos = new ArrayList<>();
             ResultSet resultado = statement.executeQuery();
