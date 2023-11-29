@@ -4,6 +4,7 @@ import org.example.data.Produto;
 import org.example.data.repository.ProdutoRepository;
 import org.example.presentation.DTO.UpdateProdutoDTO;
 import org.example.util.LocalizadorDeServico;
+import org.example.util.exception.DeactivatedProductException;
 import org.example.util.exception.InternalServerErrorException;
 import org.example.util.exception.NotFoundException;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 public abstract class UpdateProdutoService {
 
-    public static Produto execute(Produto produto) throws NotFoundException, InternalServerErrorException {
+    public static Produto execute(Produto produto) throws NotFoundException, InternalServerErrorException, DeactivatedProductException {
 
         ProdutoRepository produtoRepository = LocalizadorDeServico.getProdutoRepository();
 
@@ -20,6 +21,10 @@ public abstract class UpdateProdutoService {
 
         if (!existente.isPresent()) {
             throw new NotFoundException("Produto não encontrado", 404);
+        }
+
+        if (!existente.get().getLativo()){
+            throw new DeactivatedProductException("Produto desativado", 400);
         }
 
         produto = setProduto(produto, existente.get());
@@ -48,10 +53,6 @@ public abstract class UpdateProdutoService {
 
         if(produto.getEstoque_min() == null || produto.getEstoque_min() < 0){
             produto.setEstoque_min(existente.getEstoque_min());
-        }
-
-        if(produto.getLativo() == null){
-            produto.setLativo(existente.getLativo());
         }
 
         produto.setNome(existente.getNome());

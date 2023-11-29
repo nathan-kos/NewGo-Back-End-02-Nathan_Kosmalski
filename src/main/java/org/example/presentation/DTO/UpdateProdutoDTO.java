@@ -15,8 +15,6 @@ public class UpdateProdutoDTO {
 
     private Integer estoque_min;
 
-    private Boolean lativo;
-
     public UpdateProdutoDTO() {
     }
 
@@ -25,7 +23,6 @@ public class UpdateProdutoDTO {
         this.preco = preco;
         this.quantidade = quantidade;
         this.estoque_min = estoque_min;
-        this.lativo = lativo;
     }
 
 }

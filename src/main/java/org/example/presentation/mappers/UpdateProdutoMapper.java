@@ -14,7 +14,6 @@ public class UpdateProdutoMapper {
             produto.setPreco(updateProdutoDTO.getPreco());
             produto.setQuantidade(updateProdutoDTO.getQuantidade());
             produto.setEstoque_min(updateProdutoDTO.getEstoque_min());
-            produto.setLativo(updateProdutoDTO.getLativo());
             produto.setHash(hash);
 
          return produto;
