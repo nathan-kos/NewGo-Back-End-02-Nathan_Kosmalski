@@ -2,6 +2,7 @@ package org.example.domain.service;
 
 import org.example.data.Produto;
 import org.example.data.repository.ProdutoRepository;
+import org.example.presentation.DTO.UpdateLativoDTO;
 import org.example.util.LocalizadorDeServico;
 import org.example.util.exception.InternalServerErrorException;
 import org.example.util.exception.NotFoundException;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public abstract class UpdateLativoService {
 
-    public static Produto execute(UUID hash, boolean lativo) throws NotFoundException, InternalServerErrorException {
+    public static Produto execute(UUID hash, UpdateLativoDTO lativo) throws NotFoundException, InternalServerErrorException {
 
         ProdutoRepository repository = LocalizadorDeServico.getProdutoRepository();
 
@@ -23,7 +24,7 @@ public abstract class UpdateLativoService {
 
         Produto toUpdate = produto.get();
 
-        toUpdate.setLativo(lativo);
+        toUpdate.setLativo(lativo.getLativo());
 
         try {
             repository.setLativoProduto(toUpdate);
