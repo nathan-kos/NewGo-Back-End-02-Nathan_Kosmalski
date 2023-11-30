@@ -32,14 +32,17 @@ public abstract class GetProdutoService {
             return produto.get();
         }
 
-        produto = produtoRepository.findByNome(parametro);
+        produto = produtoRepository.findByNome(parametro.toUpperCase());
 
         if (produto.isPresent()) {
             return produto.get();
         }
 
-        produto = produtoRepository.findById(Long.valueOf(parametro));
-
+        try {
+            produto = produtoRepository.findById(Long.valueOf(parametro));
+        }catch (NumberFormatException e) {
+            // do nothing
+        }
         if (produto.isPresent()) {
             return produto.get();
         }
