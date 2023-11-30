@@ -7,6 +7,7 @@ import org.example.util.LocalizadorDeServico;
 import org.example.util.exception.InternalServerErrorException;
 import org.example.util.exception.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ public abstract class UpdateLativoService {
         Produto toUpdate = produto.get();
 
         toUpdate.setLativo(lativo.getLativo());
+        toUpdate.setDtupdate(LocalDateTime.now());
 
         try {
             repository.setLativoProduto(toUpdate);
