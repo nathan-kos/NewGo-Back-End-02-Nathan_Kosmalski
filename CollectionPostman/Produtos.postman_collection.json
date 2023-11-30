@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "88ebb59d-2819-440b-b9f3-c6db649f97fe",
+		"name": "Produtos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31314335"
+	},
+	"item": [
+		{
+			"name": "Desativar Produto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/produtos?hash=04d5222a-495e-4770-bf74-a19d32f6eaf8",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos"
+					],
+					"query": [
+						{
+							"key": "hash",
+							"value": "04d5222a-495e-4770-bf74-a19d32f6eaf8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Salvar Produto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"mordekaiser\",\r\n    \"descricao\": \"os ingratos chamam-me de tirano os sabios chamam-me de SENHOR\",\r\n    \"ean13\": \"0987654321121\",\r\n    \"preco\": 10000000.00,\r\n    \"quantidade\": 1,\r\n    \"estoque_min\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/produtos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Salvar Produto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Adesivos\",\r\n    \"descricao\": \"adesivos da new go\",\r\n    \"ean13\": \"asdafdfsdf423\",\r\n    \"preco\": 0.00,\r\n    \"quantidade\": 10000,\r\n    \"estoque_min\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produtos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Update Lativo Produto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lativo\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/produtos/2de9a96c-0258-4ae7-b3d3-b4863429ae9b/ativo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos",
+						"2de9a96c-0258-4ae7-b3d3-b4863429ae9b",
+						"ativo"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Ativar",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lativo\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produtos/2de9a96c-0258-4ae7-b3d3-b4863429ae9b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"2de9a96c-0258-4ae7-b3d3-b4863429ae9b"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Desativar",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lativo\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produtos/2de9a96c-0258-4ae7-b3d3-b4863429ae9b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"2de9a96c-0258-4ae7-b3d3-b4863429ae9b"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Get produto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/produtos/2de9a96c-0258-4ae7-b3d3-b4863429ae9b",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos",
+						"2de9a96c-0258-4ae7-b3d3-b4863429ae9b"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Hash",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/2de9a96c-0258-4ae7-b3d3-b4863429ae9b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"2de9a96c-0258-4ae7-b3d3-b4863429ae9b"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/11",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"11"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Nome",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/mORdEKaISER",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"mORdEKaISER"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "EAN13",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/0987654321121",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"0987654321121"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "List Produto",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "page",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "limit",
+						"value": "5",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/produtos/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "List Produto",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "page",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "limit",
+								"value": "5",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "UpdateProduto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"descricao\": \"os ingratos chamam-me de tirano os sábios chamam-me de SENHOR\",\r\n    \"preco\": 93.90\r\n    //\"quantidade\": 1,\r\n    //\"estoque_mim\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/produtos/2de9a96c-0258-4ae7-b3d3-b4863429ae9b",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos",
+						"2de9a96c-0258-4ae7-b3d3-b4863429ae9b"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateProduto",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    //\"descricao\": \"os ingratos chamam-me de tirano os sábios chamam-me de SENHOR\"\r\n    \"preco\": 932.90\r\n    //\"quantidade\": 1,\r\n    //\"estoque_mim\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produtos/2de9a96c-0258-4ae7-b3d3-b4863429ae9b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"2de9a96c-0258-4ae7-b3d3-b4863429ae9b"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}
