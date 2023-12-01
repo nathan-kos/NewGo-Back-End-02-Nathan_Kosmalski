@@ -3,7 +3,7 @@
     <display-name>Maven webapp</display-name>
     <servlet>
         <servlet-name>index</servlet-name>
-        <servlet-class>org.example.servlet.index</servlet-class>
+        <servlet-class>org.example.presentation.servlet.index</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
