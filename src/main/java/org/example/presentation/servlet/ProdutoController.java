@@ -21,7 +21,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.UUID;
 
 @WebServlet("/produtos/*")
 public class ProdutoController extends HttpServlet {
@@ -34,7 +33,6 @@ public class ProdutoController extends HttpServlet {
         // produto/id -> GET -> buscar produto por id
         // produto/ean13 -> GET -> buscar produto por ean13
         // produto/nome -> GET -> buscar produto por nome
-        // produto/ativo -> GET -> buscar produtos ativos
 
         String parametro = request.getPathInfo().split("/").length > 1 ? request.getPathInfo().split("/")[1] : null;
 
@@ -42,7 +40,7 @@ public class ProdutoController extends HttpServlet {
         if(parametro != null) {
             try {
                 Produto produto = GetProdutoService.execute(parametro);
-                ResponseDTO<Produto> responseDTO = new ResponseDTO<Produto>(produto, "Produto encontrado com sucesso!", 200);
+                ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto encontrado com sucesso!", 200);
                 response.setStatus(200);
                 response.getWriter().println(JsonConverter.toJson(responseDTO));
             } catch (ProductException e) {
