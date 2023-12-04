@@ -31,7 +31,7 @@ public abstract class CreateProdutoService {
            produto.setPreco(0.0);
        }
 
-       if(produto.getEan13() == null || produto.getEan13().length() != 13) {
+       if(produto.getEan13() == null) {
            throw new InvalidProductException("Ean13 do produto inválido", 400);
        }
 
