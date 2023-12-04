@@ -3,6 +3,8 @@ package org.example.domain.service;
 import org.example.data.Produto;
 import org.example.data.repository.ProdutoRepository;
 import org.example.util.LocalizadorDeServico;
+import org.example.util.UuidConverter;
+import org.example.util.exception.InvalidParamsException;
 import org.example.util.exception.NotFoundException;
 
 import java.util.Optional;
@@ -10,43 +12,22 @@ import java.util.UUID;
 
 public abstract class GetProdutoService {
 
-    public static Produto execute(String parametro) throws NotFoundException {
+    public static Produto execute(String parametro) throws NotFoundException, InvalidParamsException {
 
         ProdutoRepository produtoRepository = LocalizadorDeServico.getProdutoRepository();
 
-        Optional<Produto> produto = Optional.empty();
-
-        try {
-            produto = produtoRepository.findByHash(UUID.fromString(parametro));
-
-            if (produto.isPresent()) {
-                return produto.get();
-            }
-        }catch (IllegalArgumentException e) {
-            // do nothing
+        if(!UuidConverter.isValid(parametro)){
+            throw new InvalidParamsException("Parametro inválido", 400);
         }
 
-        produto = produtoRepository.findByEan13(parametro);
+        Optional<Produto> produto = produtoRepository.findByHash(UuidConverter.toUuid(parametro));
 
-        if (produto.isPresent()) {
-            return produto.get();
+
+        if (!produto.isPresent()) {
+            throw new NotFoundException("Produto não encontrado", 404);
         }
 
-        produto = produtoRepository.findByNome(parametro.toUpperCase());
+        return produto.get();
 
-        if (produto.isPresent()) {
-            return produto.get();
-        }
-
-        try {
-            produto = produtoRepository.findById(Long.valueOf(parametro));
-        }catch (NumberFormatException e) {
-            // do nothing
-        }
-        if (produto.isPresent()) {
-            return produto.get();
-        }
-
-        throw new NotFoundException("Produto não encontrado", 404);
     }
 }
