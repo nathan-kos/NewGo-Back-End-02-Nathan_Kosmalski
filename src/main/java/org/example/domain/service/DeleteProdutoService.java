@@ -3,6 +3,7 @@ package org.example.domain.service;
 import org.example.data.Produto;
 import org.example.data.repository.ProdutoRepository;
 import org.example.util.LocalizadorDeServico;
+import org.example.util.UuidConverter;
 import org.example.util.exception.DeactivatedProductException;
 import org.example.util.exception.InternalServerErrorException;
 import org.example.util.exception.NotFoundException;
@@ -17,13 +18,11 @@ public abstract class DeleteProdutoService {
 
         ProdutoRepository produtoRepository = LocalizadorDeServico.getProdutoRepository();
 
-        UUID uuid = null;
-
-        try {
-           uuid = UUID.fromString(hash);
-        } catch (IllegalArgumentException e) {
+        if(hash == null || hash.isEmpty() || !UuidConverter.isValid(hash)){
             throw new NotFoundException("Produto não encontrado!", 404);
         }
+
+        UUID uuid = UuidConverter.toUuid(hash) ;
 
         Optional<Produto> produto = produtoRepository.findByHash(uuid);
 
@@ -31,16 +30,10 @@ public abstract class DeleteProdutoService {
             throw new NotFoundException("Produto não encontrado!", 404);
         }
 
-        if(!produto.get().getLativo()) {
-            throw new DeactivatedProductException("Produto desativado!", 400);
-        }
-
-        produto.get().setLativo(false);
-
         try {
-            produtoRepository.setLativoProduto(produto.get());
+            produtoRepository.delete(produto.get());
         }catch (Exception e) {
-            throw new InternalServerErrorException("Erro ao desativar produto!", 500);
+            throw new InternalServerErrorException("Erro ao deletar produto!", 500);
         }
 
     }
