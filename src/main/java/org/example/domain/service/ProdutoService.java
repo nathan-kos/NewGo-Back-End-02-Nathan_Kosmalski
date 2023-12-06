@@ -152,9 +152,17 @@ public class ProdutoService {
 
     }
 
-    public Produto updateProduto(Produto produto) throws NotFoundException, InternalServerErrorException, DeactivatedProductException {
+    public Produto updateProduto(Produto produto) throws NotFoundException, InternalServerErrorException, DeactivatedProductException, InvalidParamsException {
 
         Optional<Produto> existente = repository.findByHash(produto.getHash());
+
+        if(produto.getDescricao() == null || produto.getPreco() == null || produto.getQuantidade() == null || produto.getEstoque_min() == null){
+            throw new InvalidParamsException("Parametros inválidos", 400);
+        }
+
+        if(produto.getEstoque_min() < 0 || produto.getQuantidade() < 0 || produto.getPreco() < 0){
+            throw new InvalidParamsException("Parametros inválidos", 400);
+        }
 
         if (!existente.isPresent()) {
             throw new NotFoundException("Produto não encontrado", 404);
@@ -166,7 +174,12 @@ public class ProdutoService {
 
         produto = setProduto(produto, existente.get());
 
+        if (produto.getEstoque_min().equals(existente.get().getEstoque_min()) && produto.getQuantidade().equals(existente.get().getQuantidade()) && produto.getPreco().equals(existente.get().getPreco()) && produto.getDescricao().equals(existente.get().getDescricao())) {
+            return produto;
+        }
+
         try {
+            produto.setDtupdate(LocalDateTime.now());
             return repository.update(produto);
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -176,27 +189,13 @@ public class ProdutoService {
     }
 
     private static Produto setProduto(Produto produto, Produto existente){
-        if(produto.getDescricao() == null || produto.getDescricao().isEmpty()){
-            produto.setDescricao(existente.getDescricao());
-        }
-
-        if(produto.getPreco() == null || produto.getPreco() < 0){
-            produto.setPreco(existente.getPreco());
-        }
-
-        if(produto.getQuantidade() == null || produto.getQuantidade() < 0){
-            produto.setQuantidade(existente.getQuantidade());
-        }
-
-        if(produto.getEstoque_min() == null || produto.getEstoque_min() < 0){
-            produto.setEstoque_min(existente.getEstoque_min());
-        }
 
         produto.setNome(existente.getNome());
         produto.setEan13(existente.getEan13());
 
         produto.setDtcreate(existente.getDtcreate());
-        produto.setDtupdate(LocalDateTime.now());
+        produto.setDtupdate(existente.getDtupdate());
+        produto.setLativo(existente.getLativo());
 
         return produto;
     }
