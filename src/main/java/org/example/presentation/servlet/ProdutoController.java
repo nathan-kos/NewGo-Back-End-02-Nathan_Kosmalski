@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @WebServlet("/produtos/*")
 public class ProdutoController extends HttpServlet {
@@ -70,10 +71,51 @@ public class ProdutoController extends HttpServlet {
        // produto/ -> POST -> cadastrar produto
 
         response.setContentType("application/json");
-            String body = getBodyReqJson(request);
+
+            String hash = request.getPathInfo().split("/").length > 1 ? request.getPathInfo().split("/")[1] : null;
+
 
             ProdutoService service = LocalizadorDeServico.getProdutoService();
 
+            if(hash != null){
+                String context = request.getPathInfo().split("/").length > 2 ? request.getPathInfo().split("/")[2] : null;
+               if(context.equals("ativar")){
+                   try {
+                       Produto produto = service.updateLativo(UuidConverter.toUuid(hash), new UpdateLativoDTO(true));
+                       ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto ativado com sucesso!", 200);
+                       response.setStatus(200);
+                       response.getWriter().println(JsonConverter.toJson(responseDTO));
+                       return;
+                   } catch (ProductException e) {
+                       response.setStatus(e.getCode());
+                       ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
+                       response.getWriter().println(JsonConverter.toJson(responseDTO));
+                       return;
+                   }
+               }
+
+               if(context.equals("desativar")){
+                   try {
+                       Produto produto = service.updateLativo(UuidConverter.toUuid(hash), new UpdateLativoDTO(false));
+                       ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto desativado com sucesso!", 200);
+                       response.setStatus(200);
+                       response.getWriter().println(JsonConverter.toJson(responseDTO));
+                       return;
+                   } catch (ProductException e) {
+                       response.setStatus(e.getCode());
+                       ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
+                       response.getWriter().println(JsonConverter.toJson(responseDTO));
+                       return;
+                   }
+               }
+
+                response.setStatus(400);
+                ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, "rota não encontrada!", 400);
+                response.getWriter().println(JsonConverter.toJson(responseDTO));
+                return;
+            }
+
+            String body = getBodyReqJson(request);
             try{
                 Produto produto = CreateProdutoMapper.toProduto(JsonConverter.fromJson(body, CreateProdutoDTO.class));
                 produto = service.createProduto(produto);
@@ -99,32 +141,16 @@ public class ProdutoController extends HttpServlet {
         
         String body = getBodyReqJson(request);
 
-        String context = request.getPathInfo().split("/").length > 2 ? request.getPathInfo().split("/")[2] : null;
-
-
-        if(context != null && context.equals("ativo")){
-            try {
-                Produto produto = service.updateLativo(UuidConverter.toUuid(hash), JsonConverter.fromJson(body, UpdateLativoDTO.class));
-                ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto ativado com sucesso!", 200);
-                response.setStatus(200);
-                response.getWriter().println(JsonConverter.toJson(responseDTO));
-            } catch (ProductException e) {
-                response.setStatus(e.getCode());
-                ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
-                response.getWriter().println(JsonConverter.toJson(responseDTO));
-            }
-        }else {
-            try {
-                Produto produto = UpdateProdutoMapper.toProduto(JsonConverter.fromJson(body, UpdateProdutoDTO.class), UuidConverter.toUuid(hash));
-                produto = service.updateProduto(produto);
-                ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto atualizado com sucesso!", 200);
-                response.setStatus(200);
-                response.getWriter().println(JsonConverter.toJson(responseDTO));
-            } catch (ProductException e) {
-                response.setStatus(e.getCode());
-                ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
-                response.getWriter().println(JsonConverter.toJson(responseDTO));
-            }
+        try {
+            Produto produto = UpdateProdutoMapper.toProduto(JsonConverter.fromJson(body, UpdateProdutoDTO.class), UuidConverter.toUuid(hash));
+            produto = service.updateProduto(produto);
+            ResponseDTO<Produto> responseDTO = new ResponseDTO<>(produto, "Produto atualizado com sucesso!", 200);
+            response.setStatus(200);
+            response.getWriter().println(JsonConverter.toJson(responseDTO));
+        } catch (ProductException e) {
+            response.setStatus(e.getCode());
+            ResponseDTO<Void> responseDTO = new ResponseDTO<>(null, e.getMessage(), e.getCode());
+            response.getWriter().println(JsonConverter.toJson(responseDTO));
         }
     }
 
