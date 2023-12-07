@@ -273,4 +273,18 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
             throw new RuntimeException("Erro ao desativar produto");
         }
     }
+
+    @Override
+    public void delete(Produto produto) throws SQLException {
+        try {
+            conexao.setAutoCommit(false);
+            PreparedStatement statement = conexao.prepareStatement("DELETE FROM produtos WHERE hash = ?");
+            statement.setObject(1, produto.getHash());
+            statement.execute();
+            conexao.commit();
+        }catch (Exception error) {
+            conexao.rollback();
+            throw new RuntimeException("Erro ao deletar produto");
+        }
+    }
 }
