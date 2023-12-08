@@ -18,7 +18,7 @@ public abstract class CreateProdutoMapper {
             createProdutoDTO.getQuantidade(),
             createProdutoDTO.getEstoque_min(),
                 LocalDateTime.now(),
-                LocalDateTime.now(),
+                null,
                 false
         );
     }
