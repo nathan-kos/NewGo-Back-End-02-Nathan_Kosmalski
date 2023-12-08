@@ -263,9 +263,10 @@ public class ProdutoRepositoryPostgresql implements ProdutoRepository {
     public void setLativoProduto(Produto produto) throws SQLException {
         try {
             conexao.setAutoCommit(false);
-            PreparedStatement statement = conexao.prepareStatement("UPDATE produtos SET lativo = ? WHERE hash = ?");
+            PreparedStatement statement = conexao.prepareStatement("UPDATE produtos SET lativo = ?, dtupdate = ? WHERE hash = ?");
             statement.setBoolean(1, produto.getLativo());
-            statement.setObject(2, produto.getHash());
+            statement.setObject(2, LocalDateTime.now());
+            statement.setObject(3, produto.getHash());
             statement.execute();
             conexao.commit();
         }catch (Exception error) {
